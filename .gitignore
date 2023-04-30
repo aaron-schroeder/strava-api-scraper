@@ -1,0 +1,4 @@
+redis-stable/
+*.pyc
+__pycache__/
+env/

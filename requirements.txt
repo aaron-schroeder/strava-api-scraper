@@ -1,0 +1,6 @@
+scrapy
+oauthlib
+redis
+txredisapi
+dj_redis_url
+git+https://github.com/aaron-schroeder/strava-oauth.git
