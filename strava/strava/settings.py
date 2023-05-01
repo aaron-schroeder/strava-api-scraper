@@ -16,10 +16,12 @@ ROBOTSTXT_OBEY = False
 
 DOWNLOADER_MIDDLEWARES = {
    "strava.middlewares.oauth.HttpOAuth2Middleware": 543,
-   "strava.middlewares.ratelimit.StravaRateLimitMiddleware": 553,
+   "strava.middlewares.ratelimit.StravaRateLimitMiddleware": 544,
 }
 
-STRAVA_REDIS_URL = "redis://127.0.0.1:6379"
+RETRY_ENABLED = False
+
+# STRAVA_REDIS_URL = "redis://127.0.0.1:6379"
 
 # Set settings whose default value is deprecated to a future-proof value
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
