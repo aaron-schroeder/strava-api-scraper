@@ -11,18 +11,10 @@ class StravaApiStreamSpider(Spider):
   name = 'streams'
   allowed_domains = ['strava.com']
   url_base = 'https://www.strava.com/api/v3'
-  handle_httpstatus_list = [401, 404, 429]
-
-  def __init__(self, *args, **kwargs):
-    # TODO: Figure out if this can happen automatically. Seem repetitive.
-    self.oauth_client_id = kwargs.pop('oauth_client_id')
-    self.oauth_access_token = kwargs.pop('oauth_access_token')
-    super().__init__(*args, **kwargs)
 
   @classmethod
   def from_crawler(cls, crawler, *args, **kwargs):
     spider = super().from_crawler(crawler, *args, **kwargs)
-
     # Most straightforward/naive approach is to look at the 
     # output file(s) and see which activities have already been scraped.
     spider.saved_activity_ids = []
@@ -41,7 +33,6 @@ class StravaApiStreamSpider(Spider):
           with open(feed_uri, 'r') as f:
             spider.saved_activity_ids = [json.loads(line)['activity_id'] 
                                          for line in f]
-
     return spider
  
   # Start on the first activity list page
@@ -81,7 +72,5 @@ class StravaApiStreamSpider(Spider):
   
   def parse_item(self, response):
     js = response.json()
-    return dict(
-      activity_id=response.meta['activity_id'],
-      data=js if isinstance(js, list) else []
-    )
+    return dict(activity_id=response.meta['activity_id'],
+                data=js if isinstance(js, list) else [])

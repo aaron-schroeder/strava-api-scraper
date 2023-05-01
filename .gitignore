@@ -2,3 +2,5 @@ redis-stable/
 *.pyc
 __pycache__/
 env/
+*.sqlite
+*.sqlite3

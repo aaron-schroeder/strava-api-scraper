@@ -10,16 +10,13 @@ class StravaRateLimitMiddleware:
     @classmethod
     def from_crawler(cls, crawler):
         """Create a new instance and pass it Redis' url and namespace"""
-        # Get redis URL
-        redis_url = crawler.settings.get('STRAVA_REDIS_URL', None)
-        # If doesn't exist, disable
-        if not redis_url:
-            raise NotConfigured
-        redis_nm = crawler.settings.get('STRAVA_REDIS_NS', 'RATE_LIMIT')
-        o = cls(redis_url, redis_nm)
-        return o
+        return cls(crawler.settings.get('STRAVA_REDIS_URL', None), 
+                   crawler.settings.get('STRAVA_REDIS_NS', 'RATE_LIMIT'))
 
     def __init__(self, redis_url, redis_nm):
+        # If redis url doesn't exist, disable
+        if not redis_url:
+            raise NotConfigured
         # Store the url and the namespace for future reference
         self.redis_url = redis_url
         self.redis_nm = redis_nm
