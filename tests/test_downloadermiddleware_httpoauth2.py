@@ -31,11 +31,6 @@ class HttpOAuth2MiddlewareTest(unittest.TestCase):
         req2 = self.mw.process_request(req, self.spider)
         self.assertIsInstance(req2, Request)
         self.assertIsNot(req, req2)
-        
-        # NOTE: I came in expecting the header to be different
-        # - I thought it'd be a string, but I guess scrapy does bytes.
-        # - I thought there'd be a colon (Bearer: access_token) coming from
-        #   oauthlib. I am gonna assume it works this way though!
         self.assertEqual(req2.headers['Authorization'], b'Bearer access_token')
 
     def test_auth_subdomain(self):
